@@ -1,0 +1,52 @@
+import json
+import requests
+import datetime, time
+from requests.exceptions import RequestException
+from parse_rest.connection import register
+from parse_rest.datatypes import Object
+from HeadCount import HeadCount
+# from xml.etree import ElementTree
+
+import config
+
+#Parse initialization
+register(config.APPLICATION_ID, config.REST_API_KEY, master_key=config.MASTER_KEY)
+
+ip = config.router['ip']
+
+try:
+	#Router login
+	payload = config.router
+	loginReq = requests.post('http://%s/cgi-bin/login' % ip, data=payload)
+
+	#Router Wi-Fi devices request
+	headers = {'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+	formdata = '<xmlrequest version="1.0.1"><command inst="cfgmgr-0"><key>begin_transaction</key><value>wireless-0</value></command><command inst="cfgmgr-0"><key>begin_transaction</key><value>wireless-1</value></command><query inst="wireless-0"><key>ap0_sta_list</key><value/></query><query inst="wireless-0"><key>ap1_sta_list</key><value/></query><query inst="wireless-0"><key>ap2_sta_list</key><value/></query><query inst="wireless-0"><key>ap3_sta_list</key><value/></query><query inst="wireless-1"><key>ap0_sta_list</key><value/></query><query inst="wireless-1"><key>ap1_sta_list</key><value/></query><query inst="wireless-1"><key>ap2_sta_list</key><value/></query><query inst="wireless-1"><key>ap3_sta_list</key><value/></query><command inst="cfgmgr-0"><key>commit</key><value>wireless-0</value></command><command inst="cfgmgr-0"><key>commit</key><value>wireless-1</value></command><command inst="cfgmgr-0"><key>end_transaction</key><value>wireless-0</value></command><command inst="cfgmgr-0"><key>end_transaction</key><value>wireless-1</value></command></xmlrequest>'
+	r = requests.post('http://%s/cgi-bin/webapp' % ip, data=formdata, cookies = loginReq.cookies)
+
+	# XML Parse
+	# tree = ElementTree.fromstring(r.content)
+
+	count = r.text.count(".mac")
+
+	if count > 0:
+		message = "Open! %d device(s) connected." % count
+	else:
+		message = "Closed!"
+
+except RequestException:
+	count = -1;
+	message = "Status Unknown!"
+
+headCountClass = HeadCount()
+headCountClass.count = count
+headCountClass.save()
+
+print json.dumps({
+		'state': {
+			'open': count > 0, 
+			'lastchange': int(time.mktime(headCountClass.updatedAt.timetuple())),
+			'headcount': count,
+			'message': message
+		}
+	}, indent=4)
