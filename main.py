@@ -10,19 +10,19 @@ from HeadCount import HeadCount
 import config
 
 #Parse initialization
-register(config.APPLICATION_ID, config.REST_API_KEY, master_key=config.MASTER_KEY)
+register(config.APPLICATION_ID, config.REST_API_KEY, master_key = config.MASTER_KEY)
 
 ip = config.router['ip']
 
 try:
 	#Router login
 	payload = config.router
-	loginReq = requests.post('http://%s/cgi-bin/login' % ip, data=payload)
+	loginReq = requests.post('http://%s/cgi-bin/login' % ip, data = payload)
 
 	#Router Wi-Fi devices request
 	headers = {'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
 	formdata = '<xmlrequest version="1.0.1"><command inst="cfgmgr-0"><key>begin_transaction</key><value>wireless-0</value></command><command inst="cfgmgr-0"><key>begin_transaction</key><value>wireless-1</value></command><query inst="wireless-0"><key>ap0_sta_list</key><value/></query><query inst="wireless-0"><key>ap1_sta_list</key><value/></query><query inst="wireless-0"><key>ap2_sta_list</key><value/></query><query inst="wireless-0"><key>ap3_sta_list</key><value/></query><query inst="wireless-1"><key>ap0_sta_list</key><value/></query><query inst="wireless-1"><key>ap1_sta_list</key><value/></query><query inst="wireless-1"><key>ap2_sta_list</key><value/></query><query inst="wireless-1"><key>ap3_sta_list</key><value/></query><command inst="cfgmgr-0"><key>commit</key><value>wireless-0</value></command><command inst="cfgmgr-0"><key>commit</key><value>wireless-1</value></command><command inst="cfgmgr-0"><key>end_transaction</key><value>wireless-0</value></command><command inst="cfgmgr-0"><key>end_transaction</key><value>wireless-1</value></command></xmlrequest>'
-	r = requests.post('http://%s/cgi-bin/webapp' % ip, data=formdata, cookies = loginReq.cookies)
+	r = requests.post('http://%s/cgi-bin/webapp' % ip, data = formdata, cookies = loginReq.cookies)
 
 	# XML Parse
 	# tree = ElementTree.fromstring(r.content)
