@@ -44,7 +44,7 @@ headCountClass.save()
 
 print json.dumps({
 		'state': {
-			'open': count > 0, 
+			'open': None if count < 0 else count > 0, 
 			'lastchange': int(time.mktime(headCountClass.updatedAt.timetuple())),
 			'headcount': count,
 			'message': message
