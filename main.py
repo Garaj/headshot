@@ -1,6 +1,7 @@
 import json
 import requests
 import datetime, time
+import subprocess
 from requests.exceptions import RequestException
 from parse_rest.connection import register
 from parse_rest.datatypes import Object
@@ -42,11 +43,15 @@ headCountClass = HeadCount()
 headCountClass.count = count
 headCountClass.save()
 
-print json.dumps({
+state = {
 		'state': {
 			'open': None if count < 0 else count > 0, 
 			'lastchange': int(time.mktime(headCountClass.updatedAt.timetuple())),
 			'headcount': count,
 			'message': message
 		}
-	}, indent=4)
+	}
+
+subprocess.call('curl --data-urlencode sensors=\'{"state":{"open":%s}}\' --data key=%s http://spaceapi.net/new/space/garajco/sensor/set' % ("true" if count>0 else "false", config.SPACE_API_KEY), shell=True)
+
+print json.dumps(state, indent=4)
