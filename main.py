@@ -5,6 +5,7 @@ import subprocess
 from requests.exceptions import RequestException
 from parse_rest.connection import register
 from parse_rest.datatypes import Object
+from parse_rest.datatypes import ACL
 from HeadCount import HeadCount
 # from xml.etree import ElementTree
 
@@ -39,14 +40,15 @@ except RequestException:
 	count = -1;
 	message = "Status Unknown!"
 
-headCountClass = HeadCount()
-headCountClass.count = count
-headCountClass.save()
+headCount = HeadCount()
+headCount.ACL = ACL()
+headCount.count = count
+headCount.save()
 
 state = {
 		'state': {
 			'open': None if count < 0 else count > 0, 
-			'lastchange': int(time.mktime(headCountClass.updatedAt.timetuple())),
+			'lastchange': int(time.mktime(headCount.updatedAt.timetuple())),
 			'headcount': count,
 			'message': message
 		}
