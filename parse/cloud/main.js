@@ -52,7 +52,7 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 			output.state.lastchange = Math.floor(lastHeadCount.updatedAt.getTime() / 1000);
 			output.state.headcount = count;
 			
-			if (count > 2) {
+			if (count > 0) {
 				output.state.message = "Open! " + count + " device(s) connected.";
 			} else {
 				output.state.message = "Closed!";
