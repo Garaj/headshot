@@ -41,10 +41,15 @@ except RequestException:
     count = -1
     message = "Status Unknown!"
 
-headCount = HeadCount()
-headCount.ACL = ACL()
-headCount.count = count
-headCount.save()
+lastHeadCount = HeadCount.Query.all().order_by('-updatedAt').limit(1)
+
+if lastHeadCount[0].count != count:
+    headCount = HeadCount()
+    headCount.ACL = ACL()
+    headCount.count = count
+    headCount.save()
+else:
+    headCount = lastHeadCount[0]
 
 state = {
         'state': {
