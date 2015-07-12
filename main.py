@@ -55,6 +55,4 @@ state = {
         }
     }
 
-subprocess.call('curl --data-urlencode sensors=\'{"state":{"open":%s}}\' --data key=%s http://spaceapi.net/new/space/garajco/sensor/set' % ("true" if count > 0 else "false", config.SPACE_API_KEY), shell=True)
-
 print json.dumps(state, indent=4)
