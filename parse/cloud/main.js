@@ -1,6 +1,12 @@
 
 require('cloud/app.js');
 
+var TIME_THRESHHOLD = 2 * 60 * 60 * 1000; /* ms */
+
+function isOpen(count, updatedAt) {
+	return count > 0 && ((new Date) - updatedAt) < TIME_THRESHHOLD;
+}
+
 Parse.Cloud.define("spaceapi", function(request, response) {
   	Parse.Cloud.useMasterKey();
 
@@ -46,13 +52,13 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 
 			var count = lastHeadCount.get("count");
 
-			console.log(lastHeadCount.updatedAt);
+			console.log("Last updated date is " + lastHeadCount.updatedAt.get);
 
-			output.state.open = count > 0;
+			output.state.open = isOpen(count, lastHeadCount.updatedAt);
 			output.state.lastchange = Math.floor(lastHeadCount.updatedAt.getTime() / 1000);
 			output.state.headcount = count;
 			
-			if (count > 0) {
+			if (output.state.open) {
 				output.state.message = "Open! " + count + " device(s) connected.";
 			} else {
 				output.state.message = "Closed!";
