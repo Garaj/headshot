@@ -51,9 +51,6 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 				"type": "ical",
 				"url": "https:\/\/www.google.com\/calendar\/ical\/garajsosyal%40gmail.com\/public\/basic.ics"
 			}
-		},
-		"cache": {
-			"schedule": "m.02"
 		}
 	}
 
