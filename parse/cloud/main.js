@@ -21,10 +21,10 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 			"lon": 29.048536
 		},
 		"contact": {
-			"phone": "",
-			"keymasters": [],
+			// "phone": "",
+			// "keymasters": [],
 			"facebook": "https:\/\/www.facebook.com\/groups\/garajco\/",
-			"google": "",
+			// "google": "",
 			"twitter": "@garajco",
 			"foursquare": "553fc2a3498e9ec5864448c1",
 			"email": "garajco@gmail.com",
