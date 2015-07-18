@@ -38,6 +38,10 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 			"open": null,
 			"message": "Status Unknown!"
 		},
+		"sensors": {
+			"people_now_present": [
+			]
+		},
 		"projects": [
 			"http:\/\/garaj.co\/projects",
 			"http:\/\/github.com\/Garaj"
@@ -76,6 +80,12 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 				output.state.message = "Open! " + count + " device(s) connected.";
 			} else {
 				output.state.message = "Closed!";
+			}
+
+			output.sensors.people_now_present[0] = {
+				"unit": "device(s)",
+				"value": count,
+				"description": "Number of devices on the network (excluding some devices)"
 			}
 	    }
 		response.success(output);
