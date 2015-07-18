@@ -67,8 +67,6 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 
 			var count = lastHeadCount.get("count");
 
-			console.log("Last updated date is " + lastHeadCount.updatedAt.get);
-
 			output.state.open = isOpen(count, lastHeadCount.updatedAt);
 			output.state.lastchange = Math.floor(lastHeadCount.updatedAt.getTime() / 1000);
 			output.state.headcount = count;
