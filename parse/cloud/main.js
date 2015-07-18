@@ -21,19 +21,33 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 			"lon": 29.048536
 		},
 		"contact": {
+			"phone": "",
+			"keymasters": [],
+			"facebook": "https:\/\/www.facebook.com\/groups\/garajco\/",
+			"google": "",
 			"twitter": "@garajco",
-			"email": "garajco@gmail.com"
+			"foursquare": "553fc2a3498e9ec5864448c1",
+			"email": "garajco@gmail.com",
+			"ml": "garaj-postasi@googlegroups.com",
+			"issue_mail": "garajco@gmail.com"
 		},
 		"issue_report_channels": [
-			"twitter"
+			"issue_mail"
 		],
 		"state": {
 			"open": null,
 			"message": "Status Unknown!"
 		},
 		"projects": [
+			"http:\/\/garaj.co\/projects",
 			"http:\/\/github.com\/Garaj"
 		],
+		"feeds": {
+			"calendar": {
+				"type": "ical",
+				"url": "https:\/\/www.google.com\/calendar\/ical\/garajsosyal%40gmail.com\/public\/basic.ics"
+			}
+		},
 		"cache": {
 			"schedule": "m.02"
 		}
