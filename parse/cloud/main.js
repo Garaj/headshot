@@ -17,8 +17,8 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 		"url": "http:\/\/garaj.co\/",
 		"location": {
 			"address": "Rumelihisari Mh. 4. Sk No: 27 Sariyer Istanbul",
-			"lon": 29.048536,
-			"lat": 41.0873833
+			"lat": 41.0873833,
+			"lon": 29.048536
 		},
 		"contact": {
 			"twitter": "@garajco",
