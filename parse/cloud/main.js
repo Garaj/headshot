@@ -13,7 +13,7 @@ Parse.Cloud.define("spaceapi", function(request, response) {
 	output = {
 		"api": "0.13",
 		"space": "Garaj",
-		"logo": "http:\/\/garaj.co\/img\/logo-blue.png",
+		"logo": "http:\/\/api.garaj.co\/logo-blue.png",
 		"url": "http:\/\/garaj.co\/",
 		"location": {
 			"address": "Rumelihisari Mh. 4. Sk No: 27 Sariyer Istanbul",
